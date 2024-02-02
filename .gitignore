@@ -1,0 +1,23 @@
+# Dependency directories
+node_modules/
+
+# Environment configuration
+.env
+
+# Log files
+logs/
+*.log
+
+# IDE or editor specific files
+.vscode/
+.idea/
+
+# Dependency lock files
+package-lock.json
+yarn.lock
+
+# Mac specific files
+.DS_Store
+
+# Environment variables file
+.env
