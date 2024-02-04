@@ -21,3 +21,6 @@ yarn.lock
 
 # Environment variables file
 .env
+
+# llama index storage
+index-storage/
