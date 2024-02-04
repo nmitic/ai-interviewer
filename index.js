@@ -10,7 +10,7 @@ const port = 3002; // You can use any port you prefer
 
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: ["http://localhost:3001", "https://nikola-mitic.dev/"],
   }),
 );
 
