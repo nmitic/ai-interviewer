@@ -2,6 +2,7 @@ import {
   Document,
   VectorStoreIndex,
   storageContextFromDefaults,
+  ContextChatEngine,
 } from "llamaindex";
 
 /**
@@ -22,11 +23,14 @@ export const getAnswerStream = async (source, question) => {
   const index = await VectorStoreIndex.fromDocuments([document], {
     storageContext,
   });
-  // Query the index
-  const queryEngine = index.asQueryEngine();
+  // gets retriever
+  const retriever = index.asRetriever();
+  retriever.similarityTopK = 5;
+
+  const chatEngine = new ContextChatEngine({ retriever });
   // Get stream chunks
-  const chunks = await queryEngine.query({
-    query: `Answer the following question: ${question}. Rules: You are Nikola Mitic, answers related to work experience is to be found under jobs data, be very straight forward of your answers, question will be asked to Nikola Mitic.`,
+  const chunks = await chatEngine.chat({
+    message: `Answer the following question: ${question}. Rules: You are Nikola Mitic, answers related to work experience is to be found under jobs data, be very straight forward of your answers, question will be asked to Nikola Mitic.`,
     stream: true,
   });
   // Create stream
