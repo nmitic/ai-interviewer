@@ -6,7 +6,7 @@ import { route as routeApiAsk } from "./src/routes/ask/route.js";
 dotenv.config();
 
 const app = express();
-const port = 3002; // You can use any port you prefer
+const port = 3002;
 
 app.use(
   cors({
@@ -14,10 +14,8 @@ app.use(
   }),
 );
 
-// Define your API route
 app.get("/api/ask", routeApiAsk());
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
