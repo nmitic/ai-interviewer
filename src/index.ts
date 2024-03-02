@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { route as routeApiAsk } from "./src/routes/ask/route.js";
+import { route as routeApiAsk } from "./routes/ask/route.js";
 
 dotenv.config();
 
