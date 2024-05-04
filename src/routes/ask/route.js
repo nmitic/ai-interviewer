@@ -3,9 +3,9 @@ import { getAnswerSource } from "./source.js";
 import { getAnswerStream } from "./stream.js";
 
 export const route = () => async (req, res) => {
-    const { question } = req.query;
-    const answerSource = await getAnswerSource();
-    const answerStream = await getAnswerStream(answerSource, question);
+  const { question } = req.query;
+  const answerSource = await getAnswerSource();
+  const answerStream = await getAnswerStream(answerSource, question);
 
-    await pipeline(answerStream, res);
-  }
+  await pipeline(answerStream, res);
+};

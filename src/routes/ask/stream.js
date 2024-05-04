@@ -5,14 +5,7 @@ import {
   ContextChatEngine,
 } from "llamaindex";
 
-/**
- * Retrieves a stream of answers to a given question from a provided source.
- * @async
- * @param {Object} source - The source containing data to search for answers.
- * @param {string} question - The question for which answers are sought.
- * @returns {ReadableStream} A readable stream containing the answers.
- */
-export const getAnswerStream = async (source, question) => {
+export const getAnswerChunks = async (source, question) => {
   // Create Document object
   const document = new Document({ text: JSON.stringify(source) });
   // Create storage from local file
@@ -33,12 +26,19 @@ export const getAnswerStream = async (source, question) => {
     message: `Answer the following question: ${question}. Rules: You are Nikola Mitic, answers related to work experience is to be found under jobs data, be very straight forward of your answers, question will be asked to Nikola Mitic.`,
     stream: true,
   });
+
+  return chunks
+}
+
+export const getAnswerStream = async (source, question) => {
   // Create stream
+  const answerChunks = await getAnswerChunks(source, question)
+  
   const stream = new ReadableStream({
     async start(controller) {
       const encoder = new TextEncoder();
 
-      for await (const chunk of chunks) {
+      for await (const chunk of answerChunks) {
         controller.enqueue(encoder.encode(chunk.response));
       }
 
