@@ -8,7 +8,6 @@
     "start": "node ./dist/index.js",
     "build:watch": "tsc -w",
     "build": "tsc",
-    "build:ci": "pnpm install --frozen-lockfile && pnpm run build",
     "dev": "tsx ./src/index.ts",
     "postinstall": "pnpm run tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
