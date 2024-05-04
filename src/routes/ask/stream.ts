@@ -5,6 +5,8 @@ import {
   ContextChatEngine,
 } from "llamaindex";
 
+import { ReadableStream } from "stream/web";
+
 export const getAnswerChunks = async (source: string, question: string) => {
   // Create Document object
   const document = new Document({ text: JSON.stringify(source) });

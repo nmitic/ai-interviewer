@@ -15,5 +15,5 @@ export const route = async (req: Request, res: Response) => {
   const answerSource = await getAnswerSource();
   const answerStream = await getAnswerStream(answerSource, question);
 
-  await pipeline([answerStream], res);
+  await pipeline(answerStream, res);
 };
