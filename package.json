@@ -9,7 +9,6 @@
     "build:watch": "tsc -w",
     "build": "tsc",
     "dev": "tsx ./src/index.ts",
-    "postinstall": "pnpm run tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

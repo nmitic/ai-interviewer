@@ -15,7 +15,7 @@ app.use(
   })
 );
 
-app.get("/api/ask", routeApiAsk());
+app.get("/api/ask", routeApiAsk);
 
 app.get("/api/talk", routeApiTalk);
 

@@ -5,7 +5,7 @@ import {
   ContextChatEngine,
 } from "llamaindex";
 
-export const getAnswerChunks = async (source, question) => {
+export const getAnswerChunks = async (source: string, question: string) => {
   // Create Document object
   const document = new Document({ text: JSON.stringify(source) });
   // Create storage from local file
@@ -27,13 +27,16 @@ export const getAnswerChunks = async (source, question) => {
     stream: true,
   });
 
-  return chunks
-}
+  return chunks;
+};
 
-export const getAnswerStream = async (source, question) => {
+export const getAnswerStream = async (
+  source: string,
+  question: string
+): Promise<ReadableStream> => {
   // Create stream
-  const answerChunks = await getAnswerChunks(source, question)
-  
+  const answerChunks = await getAnswerChunks(source, question);
+
   const stream = new ReadableStream({
     async start(controller) {
       const encoder = new TextEncoder();
