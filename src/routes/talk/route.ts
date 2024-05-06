@@ -1,8 +1,16 @@
 import { Request, Response } from "express";
-import { streamAudioAnswer } from "./stream.js";
+import { demoStream, streamAudioAnswer } from "./stream.js";
 
-export const route = async (req: Request, res: Response) => {
-  const { question } = req.query;
+interface RequestQuery {
+  question: string;
+  demo: string;
+}
+
+export const route = async (
+  req: Request<unknown, unknown, unknown, RequestQuery>,
+  res: Response
+) => {
+  const { question, demo } = req.query;
 
   res.set({
     "Content-Type": "audio/mp3",
@@ -13,6 +21,9 @@ export const route = async (req: Request, res: Response) => {
     return res
       .status(400)
       .send(`Client error: question query not type of string`);
+  }
+  if (demo === "true") {
+    return demoStream().pipe(res);
   }
 
   streamAudioAnswer({
