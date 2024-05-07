@@ -23,7 +23,10 @@ export const route = async (
       .send(`Client error: question query not type of string`);
   }
   if (demo === "true") {
-    return demoStream().pipe(res);
+    return demoStream({
+      onChunkReceived: (chunk) => res.write(chunk),
+      onChunkFinal: () => res.end(),
+    });
   }
 
   streamAudioAnswer({

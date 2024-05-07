@@ -3,26 +3,26 @@ import WebSocket, { ErrorEvent, CloseEvent } from "ws";
 import { getAnswerSource } from "../ask/source.js";
 import { getAnswerChunks } from "../ask/stream.js";
 import fs from "fs";
-import { error } from "console";
 
 // used for testing and dev in order to avoid hitting request quota on payed apis
-export const demoStream = () => {
+export const demoStream = ({
+  onChunkReceived,
+  onChunkFinal,
+}: {
+  onChunkReceived: (chunk: Buffer | string) => void;
+  onChunkFinal: () => void;
+}) => {
   const demoAudioPath = "src/fixtures/demo_voice/nikola_clone_voice_demo.mp3";
 
   const readStream = fs.createReadStream(demoAudioPath);
-  return readStream;
-  // readStream.on("data", (chunk) => {
-  //   const base64Chunk = chunk.toString("base64");
-  //   onChunkReceived(base64Chunk);
-  // });
 
-  // readStream.on("end", () => {
-  //   onChunkFinal();
-  // });
+  readStream.on("data", (chunk) => {
+    onChunkReceived(chunk);
+  });
 
-  // readStream.on("error", (err) => {
-  //   onError(err);
-  // });
+  readStream.on("end", () => {
+    onChunkFinal();
+  });
 };
 
 // Responsible for buffering answer from llamaindex into words which will be generated into audio stream
