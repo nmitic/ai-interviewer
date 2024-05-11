@@ -82,8 +82,8 @@ export const streamAudioAnswer = ({
   onError: (error: ErrorEvent) => void;
   onClose: (event: CloseEvent) => void;
 }) => {
-  const voiceId = "Gb8ZPzpt9F3NJOirHhyN";
-  const model = "eleven_multilingual_v2";
+  const voiceId = "IcOKBAbsVAB6WkEg78QO";
+  const model = "eleven_turbo_v2";
   const wsUrl = `wss://api.elevenlabs.io/v1/text-to-speech/${voiceId}/stream-input?model_id=${model}`;
   const socket = new WebSocket(wsUrl);
 
@@ -96,10 +96,8 @@ export const streamAudioAnswer = ({
     const bosMessage = {
       text: " ",
       voice_settings: {
-        stability: 0.8,
-        similarity_boost: 0.7,
-        style: 0.0,
-        use_speaker_boost: true,
+        stability: 0.5,
+        similarity_boost: 0.5,
       },
       xi_api_key: process.env.ELEVEN_LABS_API_KEY,
     };
