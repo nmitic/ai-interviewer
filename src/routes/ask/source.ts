@@ -13,6 +13,11 @@ const jobsQuery = gql`
         text
       }
     }
+    page(where: { slug: "interviewer-ai-meta-data" }) {
+      description {
+        text
+      }
+    }
     jobs(orderBy: startDate_DESC) {
       job_description_and_responsibilities: description {
         text
