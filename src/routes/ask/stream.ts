@@ -3,9 +3,17 @@ import {
   VectorStoreIndex,
   storageContextFromDefaults,
   ContextChatEngine,
+  Groq,
+  Settings,
 } from "llamaindex";
 
 import { ReadableStream } from "stream/web";
+
+// Update llm to use Groq
+Settings.llm = new Groq({
+  apiKey: "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",
+  model: "llama3-8b-8192",
+});
 
 export const getAnswerChunks = async (source: string, question: string) => {
   // Create Document object
@@ -19,10 +27,12 @@ export const getAnswerChunks = async (source: string, question: string) => {
     storageContext,
   });
   // gets retriever
-  const retriever = index.asRetriever();
-  retriever.similarityTopK = 5;
+  const retriever = index.asRetriever({ similarityTopK: 5 });
 
-  const chatEngine = new ContextChatEngine({ retriever });
+  const chatEngine = new ContextChatEngine({
+    retriever,
+    chatModel: Settings.llm,
+  });
   // Get stream chunks
   const chunks = await chatEngine.chat({
     message: `Answer the following question: ${question}. Rules: You are Nikola Mitic, answers related to work experience is to be found under jobs data, be very straight forward of your answers, question will be asked to Nikola Mitic.`,
