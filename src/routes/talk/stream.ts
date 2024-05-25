@@ -104,8 +104,6 @@ export const streamAudioAnswer = ({
 
     socket.send(JSON.stringify(bosMessage));
 
-    console.log("start sending chunked answer");
-
     for await (const text of textChunker(answerChunks)) {
       socket.send(JSON.stringify({ text: text, try_trigger_generation: true }));
     }
@@ -121,7 +119,6 @@ export const streamAudioAnswer = ({
     const response = JSON.parse(event.data.toString());
 
     if (response.audio) {
-      console.log("Received audio chunk");
       onChunkReceived(response.audio);
     } else {
       console.log("No audio data in the response");

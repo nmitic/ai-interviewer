@@ -4,9 +4,14 @@ import {
   storageContextFromDefaults,
   ContextChatEngine,
   Settings,
+  Groq,
 } from "llamaindex";
 
-import { ReadableStream } from "stream/web";
+// Update llm to use Groq
+Settings.llm = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
+  model: "mixtral-8x7b-32768",
+});
 
 export const getAnswerChunks = async (source: string, question: string) => {
   // Create Document object
@@ -20,7 +25,7 @@ export const getAnswerChunks = async (source: string, question: string) => {
     storageContext,
   });
   // gets retriever
-  const retriever = index.asRetriever({ similarityTopK: 5 });
+  const retriever = index.asRetriever({ similarityTopK: 1 });
 
   const chatEngine = new ContextChatEngine({
     retriever,
@@ -33,26 +38,4 @@ export const getAnswerChunks = async (source: string, question: string) => {
   });
 
   return chunks;
-};
-
-export const getAnswerStream = async (
-  source: string,
-  question: string
-): Promise<ReadableStream> => {
-  // Create stream
-  const answerChunks = await getAnswerChunks(source, question);
-
-  const stream = new ReadableStream({
-    async start(controller) {
-      const encoder = new TextEncoder();
-
-      for await (const chunk of answerChunks) {
-        controller.enqueue(encoder.encode(chunk.response));
-      }
-
-      controller.close();
-    },
-  });
-
-  return stream;
 };
