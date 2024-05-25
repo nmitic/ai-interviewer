@@ -3,17 +3,10 @@ import {
   VectorStoreIndex,
   storageContextFromDefaults,
   ContextChatEngine,
-  Groq,
   Settings,
 } from "llamaindex";
 
 import { ReadableStream } from "stream/web";
-
-// Update llm to use Groq
-Settings.llm = new Groq({
-  apiKey: "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",
-  model: "llama3-8b-8192",
-});
 
 export const getAnswerChunks = async (source: string, question: string) => {
   // Create Document object
