@@ -2,6 +2,7 @@ import { pipeline } from "node:stream/promises";
 import { Request, Response } from "express";
 import { getAnswerSource } from "./source.js";
 import { getAnswerStream } from "./stream.js";
+import { error } from "node:console";
 
 export const route = async (req: Request, res: Response) => {
   const { question } = req.query;
@@ -15,5 +16,5 @@ export const route = async (req: Request, res: Response) => {
   const answerSource = await getAnswerSource();
   const answerStream = await getAnswerStream(answerSource, question);
 
-  await pipeline(answerStream, res);
+  await pipeline(answerStream, res).catch((error) => console.log(error));
 };
