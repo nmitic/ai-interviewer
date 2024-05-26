@@ -7,15 +7,22 @@ import {
   Groq,
 } from "llamaindex";
 
-// Update llm to use Groq
-Settings.llm = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-  model: "mixtral-8x7b-32768",
-});
-
-export const getAnswerChunks = async (source: string, question: string) => {
+export const getAnswerChunks = async (
+  source: string,
+  question: string,
+  useGroq: boolean = false
+) => {
+  if (useGroq) {
+    // Update llm to use Groq
+    Settings.llm = new Groq({
+      apiKey: process.env.GROQ_API_KEY,
+      model: "llama3-8b-8192",
+    });
+  }
   // Create Document object
-  const document = new Document({ text: JSON.stringify(source) });
+  const document = new Document({
+    text: `Nikola Mitic - life story: ${JSON.stringify(source)}`,
+  });
   // Create storage from local file
   const storageContext = await storageContextFromDefaults({
     persistDir: "./index-storage",
@@ -25,7 +32,7 @@ export const getAnswerChunks = async (source: string, question: string) => {
     storageContext,
   });
   // gets retriever
-  const retriever = index.asRetriever({ similarityTopK: 1 });
+  const retriever = index.asRetriever({ similarityTopK: 3 });
 
   const chatEngine = new ContextChatEngine({
     retriever,
@@ -33,7 +40,14 @@ export const getAnswerChunks = async (source: string, question: string) => {
   });
   // Get stream chunks
   const chunks = await chatEngine.chat({
-    message: `Answer the following question: ${question}. Rules: You are Nikola Mitic, answers related to work experience is to be found under jobs data, be very straight forward of your answers, question will be asked to Nikola Mitic.`,
+    message: `
+      Act as Nikola Mitic AI clone.
+      You answer the question as if you are Nikola Mitic.
+      Answer directly, concisely and only the relevant information.
+      Avoid discussing anything which can not be found in the Nikola Mitic - life story.
+
+      Question: ${question}
+    `,
     stream: true,
   });
 

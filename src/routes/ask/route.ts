@@ -12,14 +12,13 @@ export const route = async (req: Request, res: Response) => {
   }
   try {
     const answerSource = await getAnswerSource();
-    const answerChunks = await getAnswerChunks(answerSource, question);
+    const answerChunks = await getAnswerChunks(answerSource, question, true);
 
     for await (const chunk of answerChunks) {
       if (req.closed) {
         res.end();
         return;
       }
-
       res.write(chunk.response);
     }
   } catch (error) {
