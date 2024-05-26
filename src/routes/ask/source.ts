@@ -8,17 +8,19 @@ const client = new GraphQLClient(
 
 const jobsQuery = gql`
   query Jobs {
-    page(where: { slug: "tiny-thoughts" }) {
+    nikola_mitic_short_introduction: page(where: { slug: "tiny-thoughts" }) {
       description {
         text
       }
     }
-    page(where: { slug: "interviewer-ai-meta-data" }) {
+    nikola_mitic_asnwer_to_common_job_interview_questions: page(
+      where: { slug: "interviewer-ai-meta-data" }
+    ) {
       description {
         text
       }
     }
-    jobs(orderBy: startDate_DESC) {
+    nikola_mitic_cv_resume_experiences: jobs(orderBy: startDate_DESC) {
       job_description_and_responsibilities: description {
         text
       }
