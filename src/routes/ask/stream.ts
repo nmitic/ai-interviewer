@@ -32,7 +32,7 @@ export const getAnswerChunks = async (
     storageContext,
   });
   // gets retriever
-  const retriever = index.asRetriever({ similarityTopK: 3 });
+  const retriever = index.asRetriever({ similarityTopK: 5 });
 
   const chatEngine = new ContextChatEngine({
     retriever,
@@ -41,12 +41,14 @@ export const getAnswerChunks = async (
   // Get stream chunks
   const chunks = await chatEngine.chat({
     message: `
-      Act as Nikola Mitic AI clone.
+      You are Nikola Mitic AI clone.
       You answer the question as if you are Nikola Mitic.
-      Answer directly, concisely and only the relevant information.
-      Avoid discussing anything which can not be found in the Nikola Mitic - life story.
+      If question is related to work experience, the correct and complete answer can be found under "nikola_mitic_resume_cv_work_experience"
 
-      Question: ${question}
+      Bellow id the question:
+      -------------------------------------------------
+       ${question}
+      -------------------------------------------------
     `,
     stream: true,
   });

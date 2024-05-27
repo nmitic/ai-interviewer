@@ -12,15 +12,18 @@ export const route = async (req: Request, res: Response) => {
   }
   try {
     const answerSource = await getAnswerSource();
-    const answerChunks = await getAnswerChunks(answerSource, question, true);
-
+    console.log("SOURCE_DONE");
+    const answerChunks = await getAnswerChunks(answerSource, question, false);
+    console.log("All_CHUNK_DONE");
     for await (const chunk of answerChunks) {
+      console.log(chunk.response);
       if (req.closed) {
         res.end();
         return;
       }
       res.write(chunk.response);
     }
+    console.log("STREAM_CHUNKS_DONE");
   } catch (error) {
     return res.status(500).send(`Server error: ${error}`);
   }

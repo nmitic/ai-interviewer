@@ -13,14 +13,14 @@ const jobsQuery = gql`
         text
       }
     }
-    nikola_mitic_asnwer_to_common_job_interview_questions: page(
+    nikola_mitic_answer_to_common_job_interview_questions: page(
       where: { slug: "interviewer-ai-meta-data" }
     ) {
       description {
         text
       }
     }
-    nikola_mitic_cv_resume_experiences: jobs(orderBy: startDate_DESC) {
+    nikola_mitic_resume_cv_work_experience: jobs(orderBy: startDate_DESC) {
       job_description_and_responsibilities: description {
         text
       }
@@ -28,11 +28,11 @@ const jobsQuery = gql`
       companyWebsite
       industry
       location
-      date_when_you_started_working_here: startDate
-      date_when_you_ended_working_here: endDate
-      tools_programming_languages_frameworks_you_used_in_this_job: techStackTools
+      date_when_nikola_mitic_started_working_here: startDate
+      date_when_nikola_mitic_ended_working_here: endDate
+      tools_programming_languages_frameworks_nikola_mitic_used_in_this_job: techStackTools
       job_position_title: title
-      project_that_I_worked_on: jobProjects {
+      project_that_nikola_mitic_worked_on: jobProjects {
         ... on Post {
           id
           title
