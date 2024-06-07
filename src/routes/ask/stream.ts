@@ -36,16 +36,19 @@ export const getAnswerChunks = async (
 
   const chatEngine = new ContextChatEngine({
     retriever,
-    chatModel: Settings.llm,
+    ...(useGroq
+      ? {
+          chatModel: Settings.llm,
+        }
+      : {}),
   });
   // Get stream chunks
   const chunks = await chatEngine.chat({
     message: `
-      You are Nikola Mitic AI clone.
-      You answer the question as if you are Nikola Mitic.
-      If question is related to work experience, the correct and complete answer can be found under "nikola_mitic_resume_cv_work_experience"
-
-      Bellow id the question:
+      You are Nikola Mitic  AI clone.
+      Act as Nikola Mitic.
+      Give straight forward and short answers
+      Bellow is the question:
       -------------------------------------------------
        ${question}
       -------------------------------------------------

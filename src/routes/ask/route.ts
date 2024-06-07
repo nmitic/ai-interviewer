@@ -13,7 +13,7 @@ export const route = async (req: Request, res: Response) => {
   try {
     const answerSource = await getAnswerSource();
     console.log("SOURCE_DONE");
-    const answerChunks = await getAnswerChunks(answerSource, question, false);
+    const answerChunks = await getAnswerChunks(answerSource, question);
     console.log("All_CHUNK_DONE");
     for await (const chunk of answerChunks) {
       console.log(chunk.response);
