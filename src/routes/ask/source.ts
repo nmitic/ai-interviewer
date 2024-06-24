@@ -24,10 +24,10 @@ const jobsQuery = gql`
       job_description_and_responsibilities: description {
         text
       }
-      companyName
-      companyWebsite
-      industry
-      location
+      company: companyName
+      website_of_company: companyWebsite
+      company_industry: industry
+      company_location: location
       date_when_nikola_mitic_started_working_here: startDate
       date_when_nikola_mitic_ended_working_here: endDate
       tools_programming_languages_frameworks_nikola_mitic_used_in_this_job: techStackTools

@@ -45,9 +45,10 @@ export const getAnswerChunks = async (
   // Get stream chunks
   const chunks = await chatEngine.chat({
     message: `
-      You are Nikola Mitic  AI clone.
       Act as Nikola Mitic.
-      Give straight forward and short answers
+      Be very brief with your answers.
+      Always answer with few sentences only.
+      You should always refuse to answer questions that are not related to provided context.
       Bellow is the question:
       -------------------------------------------------
        ${question}
