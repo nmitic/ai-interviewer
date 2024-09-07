@@ -12,13 +12,10 @@ export const getAnswerChunks = async (
   question: string,
   useGroq: boolean = false
 ) => {
-  if (useGroq) {
-    // Update llm to use Groq
-    Settings.llm = new Groq({
-      apiKey: process.env.GROQ_API_KEY,
-      model: "llama3-8b-8192",
-    });
-  }
+  Settings.llm = new Groq({
+    apiKey: process.env.OPENAI_API_KEY,
+    model: "gpt-4o-mini",
+  });
   // Create Document object
   const document = new Document({
     text: `Nikola Mitic - life story: ${JSON.stringify(source)}`,
